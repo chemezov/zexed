@@ -2,7 +2,7 @@
 <div id="carousel_<?= $model->id ?>" class="carousel slide portfolio-gallery">
 	<ol class="carousel-indicators">
 		<?php for ($i = 0; $i < $model->imagesCount; $i++): ?>
-			<li data-target="carousel_<?= $model->id ?>" data-slide-to="<?= $i ?>" class="<?= ($i === 0) ? 'active' : '' ?>"></li>
+			<li data-target="#carousel_<?= $model->id ?>" data-slide-to="<?= $i ?>" class="<?= ($i === 0) ? 'active' : '' ?>"></li>
 		<?php endfor; ?>
 	</ol>
 	<!-- Carousel items -->
