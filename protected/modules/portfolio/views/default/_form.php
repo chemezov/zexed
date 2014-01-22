@@ -173,6 +173,26 @@ $form = $this->beginWidget(
 	</div>
 </div>
 
+<div class="row-fluid control-group <?php echo $model->hasErrors('tagsString') ? 'error' : ''; ?>">
+	<?php echo $form->labelEx($model, 'tagsString'); ?>
+	<?php $this->widget(
+		'bootstrap.widgets.TbSelect2',
+		array(
+			'model'          => $model,
+			'attribute'      => 'tagsString',
+			'asDropDownList' => false,
+			'options'        => array(
+				'tags'            => PortfolioTag::getAllTags(),
+				'placeholder'     => $model->attributeLabels()['tagsString'],
+				'width'           => '60%',
+				'tokenSeparators' => array(',')
+			)
+		)
+	);
+	?>
+	<?php echo $form->error($model, 'tagsString'); ?>
+</div>
+
 <div class="row-fluid">
 	<?php $collapse = $this->beginWidget('bootstrap.widgets.TbCollapse'); ?>
 	<div class="accordion-group">

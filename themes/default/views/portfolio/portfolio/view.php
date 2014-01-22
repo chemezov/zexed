@@ -47,9 +47,13 @@ Yii::app()->clientScript->registerPackage('fancybox');
 	<div class="technology">
 		<strong class="show">Используемые технологии:</strong>
 
-		<div class="row-fluid">
-			<a class="label" href="" data-toggle="tooltip" title="first tooltip">PHP</a> <a class="label" href="">HTML</a>
-		</div>
+		<?php if (!empty($model->tags)): ?>
+			<div class="row-fluid">
+				<?php foreach ($model->tags as $tag): ?>
+					<a class="label" href="<?= $tag->url ?>" data-toggle="tooltip" title="<?= $tag->name ?>"><?= $tag->name ?></a>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
 	</div>
 	<?php Yii::app()->clientScript->registerScript('technology', '$(".technology a").tooltip();', CClientScript::POS_END); ?>
 </div>

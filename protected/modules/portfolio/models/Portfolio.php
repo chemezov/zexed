@@ -19,6 +19,7 @@
  * @property string $slug
  *
  * @property string $url
+ * @property PortfolioTag[] $tags
  *
  * @method Portfolio published()
  */
@@ -30,6 +31,9 @@ class Portfolio extends YModel
 	const STATUS_HTML = 4;
 	const STATUS_DEVELOPMENT = 5;
 	const STATUS_PUBLISHED = 6;
+
+	private $_tags;
+	private $_new_tags;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -63,7 +67,7 @@ class Portfolio extends YModel
 			array('slug, link', 'length', 'max' => 150),
 			array('slug', 'unique', 'caseSensitive' => false),
 			array('slug', 'YSLugValidator'),
-			array('short_description, description, end_date', 'safe'),
+			array('short_description, description, end_date, tagsString', 'safe'),
 			array('name, slug, link', 'filter', 'filter' => 'trim'),
 			array('name, slug', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
 			array('link', 'url'),
@@ -84,7 +88,9 @@ class Portfolio extends YModel
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array();
+		return array(
+			'tags' => array(self::MANY_MANY, 'PortfolioTag', '{{portfolio_portfolio_tag}}(portfolio_id, tag_id)'),
+		);
 	}
 
 	public function defaultScope()
@@ -102,6 +108,22 @@ class Portfolio extends YModel
 				'params'    => array(':status' => self::STATUS_HIDDEN),
 			)
 		);
+	}
+
+	public function tag($tag)
+	{
+		$this->getDbCriteria()->mergeWith(
+			array(
+				'with'      => array('tags'),
+				'together'  => true,
+				'condition' => 'tags.name = :name',
+				'params'    => array(
+					':name' => $tag,
+				)
+			)
+		);
+
+		return $this;
 	}
 
 	/**
@@ -123,6 +145,8 @@ class Portfolio extends YModel
 			'seo_title'         => 'SEO: Заголовок',
 			'seo_description'   => 'SEO: Описание',
 			'seo_keywords'      => 'SEO: Ключевые слова',
+			'tags'              => 'Используемые технологии',
+			'tagsString'        => 'Используемые технологии',
 		);
 	}
 
@@ -216,7 +240,16 @@ class Portfolio extends YModel
 		$this->start_date = date('Y-m-d', strtotime($this->start_date));
 		$this->end_date = (!empty($this->end_date)) ? date('Y-m-d', strtotime($this->end_date)) : null;
 
+		$this->_tags = $this->getTagsString();
+
 		return parent::beforeSave();
+	}
+
+	protected function afterSave()
+	{
+		parent::afterSave();
+
+		$this->processTagsString();
 	}
 
 	public function afterFind()
@@ -273,5 +306,109 @@ class Portfolio extends YModel
 		} else {
 			return mb_strtolower(Yii::app()->dateFormatter->format('LLLL yyyy г.', $this->start_date), Yii::app()->charset);
 		}
+	}
+
+	/**
+	 * Getter for virtual param tagsString
+	 * @return string
+	 */
+	public function getTagsString()
+	{
+		$tags = '';
+
+		if (!empty($this->tags)) {
+			foreach ($this->tags as $tag) {
+				$tags[] = $tag->name;
+			}
+
+			$tags = implode(', ', $tags);
+		}
+
+		return $tags;
+	}
+
+	/**
+	 * Setter for virtual param tagsString
+	 * Здесь параметр только устанавливается в приватное свойство _new_tags. Обработка происходит в processTagsString
+	 * @param $value
+	 */
+	public function setTagsString($value)
+	{
+		$this->_new_tags = $value;
+	}
+
+	/**
+	 * Обработчик tagsString. Удаляет из связанных таблиц удалённые тэги и добавляет новые
+	 * @return bool
+	 */
+	public function processTagsString()
+	{
+		$new_tags = explode(',', $this->_new_tags);
+		$old_tags = explode(',', $this->_tags);
+
+		$new_tags = array_map('trim', $new_tags);
+		$old_tags = array_map('trim', $old_tags);
+
+		$add_tags = array_diff($new_tags, $old_tags, array(''));
+		$remove_tags = array_diff($old_tags, $new_tags, array(''));
+
+		foreach ($add_tags as $tag) {
+			$this->addTag($tag);
+		}
+
+		foreach ($remove_tags as $tag) {
+			$this->removeTag($tag);
+		}
+
+		PortfolioTag::removeEmptyTags();
+
+		return true;
+	}
+
+	/**
+	 * Add tag to this portfolio
+	 * @param $tag_name
+	 * @return int Operation result
+	 */
+	public function addTag($tag_name)
+	{
+		$tag = PortfolioTag::getTagByName($tag_name, true);
+
+		$command = Yii::app()->db->createCommand('INSERT INTO {{portfolio_portfolio_tag}} SET portfolio_id = :model_id, tag_id = :tag_id');
+
+		$command->bindValues(
+			array(
+				':model_id' => $this->id,
+				':tag_id'   => $tag->id,
+			)
+		);
+
+		return $command->execute();
+	}
+
+	/**
+	 * Remove tag from this post
+	 * @param $tag_name
+	 * @return bool|int
+	 */
+	public function removeTag($tag_name)
+	{
+		$tag = PortfolioTag::getTagByName($tag_name);
+
+		if (!empty($tag)) // Это не должно произойти, тэг должен быть всегда найден
+		{
+			$command = Yii::app()->db->createCommand('DELETE FROM {{portfolio_portfolio_tag}} WHERE portfolio_id = :model_id AND tag_id = :tag_id');
+
+			$command->bindValues(
+				array(
+					':model_id' => $this->id,
+					':tag_id'   => $tag->id,
+				)
+			);
+
+			return $command->execute();
+		}
+
+		return false;
 	}
 }

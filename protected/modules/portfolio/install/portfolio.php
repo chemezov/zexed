@@ -10,8 +10,18 @@ return array(
 	),
 	'component' => array(),
 	'rules'     => array(
-		'/portfolio'               => '/portfolio/portfolio/index',
-		'/portfolio/<slug:[\w-]+>' => array(
+		'/portfolio'                  => '/portfolio/portfolio/index',
+		'/portfolio/tag/<tag:.*?>' => array(
+			'/portfolio/portfolio/tag',
+			'type'   => 'db',
+			'fields' => array(
+				'tag' => array(
+					'table' => '{{portfolio_tag}}',
+					'field' => 'name',
+				)
+			)
+		),
+		'/portfolio/<slug:[\w-]+>'    => array(
 			'/portfolio/portfolio/view',
 			'type'   => 'db',
 			'fields' => array(

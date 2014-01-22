@@ -86,4 +86,24 @@ class PortfolioController extends YFrontController
 
 		return $this->renderPartial('_gallery', array('model' => $model), true);
 	}
+
+	public function actionTag($tag)
+	{
+		/* Переадресовываем, если не в нижнем регистре */
+		if ($tag !== mb_strtolower($tag, Yii::app()->charset)) {
+			Yii::app()->request->redirect(
+				Yii::app()->createUrl('/portfolio/portfolio/tag', array('tag' => mb_strtolower($tag, Yii::app()->charset))),
+				true,
+				301
+			);
+		}
+
+		$dataProvider = new CActiveDataProvider(Portfolio::model()->published()->tag($tag), array(
+			'pagination' => array(
+				'pageSize' => self::PAGE_SIZE,
+			),
+		));
+
+		$this->render('tag', array('dataProvider' => $dataProvider, 'tag' => $tag));
+	}
 }
