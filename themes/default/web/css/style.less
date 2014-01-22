@@ -1,0 +1,205 @@
+@import "base";
+@import "functions";
+
+html, body {
+	height: 100%;
+}
+
+/* Wrapper for page content to push down footer */
+.page-wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/* Negative indent footer by it's height */
+	margin: 0 auto -40px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+.footer {
+	padding-top: 10px;
+	height: 30px;
+}
+
+.footer {
+	background-color: #f5f5f5;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+	.footer {
+		margin-left: -20px;
+		margin-right: -20px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+/* Custom container */
+.container {
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+.container > hr {
+	margin: 60px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+	margin: 80px 0;
+	text-align: center;
+}
+
+.jumbotron h1 {
+	font-size: 100px;
+	line-height: 1;
+}
+
+.jumbotron .lead {
+	font-size: 24px;
+	line-height: 1.25;
+}
+
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+	margin: 60px 0;
+}
+
+.marketing p + h4 {
+	margin-top: 28px;
+}
+
+/* Customize the navbar links to be fill the entire space of the .navbar */
+.navbar .navbar-inner {
+	padding: 0;
+}
+
+.navbar .nav {
+	margin: 0;
+	display: table;
+	width: 100%;
+}
+
+.navbar .nav li {
+	display: table-cell;
+	width: 1%;
+	float: none;
+}
+
+.navbar .nav li a {
+	font-weight: bold;
+	text-align: center;
+	border-left: 1px solid rgba(255, 255, 255, .75);
+	border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+.navbar .nav li:first-child a {
+	border-left: 0;
+	border-radius: 3px 0 0 3px;
+}
+
+.navbar .nav li:last-child a {
+	border-right: 0;
+	border-radius: 0 3px 3px 0;
+}
+
+.portfolio-list {
+
+	& > li {
+		margin-top: 50px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+
+	.link-block {
+		padding-top: 15px;
+	}
+
+	.title {
+		font-size: @baseFontSize * 1.5;
+
+		a {
+			color: @default-color;
+		}
+
+		span {
+			margin-left: 10px;
+			position: relative;
+			top: -1px;
+		}
+	}
+}
+
+.portfolio-view {
+	margin-bottom: 20px;
+
+	.preview {
+		margin-top: 10px;
+	}
+
+	.description {
+		margin: 15px 0;
+	}
+
+	.technology {
+		margin-top: 10px;
+
+		strong {
+			margin-bottom: 2px;
+		}
+
+		a {
+			float: left;
+			margin-right: 5px;
+		}
+	}
+}
+
+.portfolio-gallery {
+	margin-top: 20px;
+}
+
+.carousel-indicators > li {
+	cursor: pointer;
+}
+
+.stat {
+	display: inline-block;
+	color: @additional-color;
+}
+
+.pagination ul > li.previous > a {
+	border-left-width: 1px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-bottom-left-radius: 4px;
+	-ms-border-bottom-left-radius: 4px;
+	-o-border-bottom-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-moz-border-top-left-radius: 4px;
+	-ms-border-top-left-radius: 4px;
+	-o-border-top-left-radius: 4px;
+	border-top-left-radius: 4px;
+}
+
+.pagination ul > li.next > a {
+	border-right-width: 1px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-bottom-right-radius: 4px;
+	-ms-border-bottom-right-radius: 4px;
+	-o-border-bottom-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-top-right-radius: 4px;
+	-ms-border-top-right-radius: 4px;
+	-o-border-top-right-radius: 4px;
+	border-top-right-radius: 4px;
+}
