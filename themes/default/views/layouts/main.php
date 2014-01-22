@@ -69,7 +69,7 @@
 
 <div class="footer">
 	<div class="container">
-		<span class="muted">&copy; Company 2013</span>
+		<span class="muted"><?php $this->widget('application.modules.contentblock.widgets.ContentBlockWidget', array('code' => 'copyright')) ?></span>
 
 		<div class="pull-right">
 			<?php $this->widget('YPerformanceStatistic'); ?>

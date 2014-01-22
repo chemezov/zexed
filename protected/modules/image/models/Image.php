@@ -89,7 +89,7 @@ class Image extends YModel
                 'imageNameCallback' => array($this, 'generateFileName'),
                 'resize' => array(
                     'quality' => 100,
-                    'width' => 1024,
+                    'width' => 1200,
                 )
             ),
         );
