@@ -36,10 +36,10 @@ Yii::app()->clientScript->registerPackage('fancybox');
 	</div>
 
 	<?php if ($model->image): ?>
-		<a href="<?= $model->getImageUrl() ?>" class="fancybox.image"> <img class="img-polaroid" src="<?=
+		<a href="<?= $model->getImageUrl() ?>" class="portfolio-image fancybox.image"> <img class="img-polaroid" src="<?=
 			$model->getImageUrl(
 				2
-			) ?>" alt="<?= $model->name ?>" width="990" /> </a>
+			) ?>" alt="<?= $model->name ?>" /> </a>
 	<?php endif; ?>
 
 	<div class="description"><?= $model->description ?></div>

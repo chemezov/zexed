@@ -209,16 +209,47 @@ html, body {
 	top: auto;
 }
 
+.portfolio-image {
+	display: block;
+
+	& > img {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+}
+
 .fancybox-title {
 	padding: 0 0 10px 0;
 }
 
 .fancybox-gallery {
-	margin-right: -15px;
+	margin-right: -2%;
 }
 
 .fancybox-gallery-item {
-	margin: 0 15px 15px 0;
+	margin: 0 2% 2% 0;
 	display: inline-block;
 	float: left;
+	width: 18%;
+
+	& > img {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 979px) {
+	.fancybox-gallery-item {
+		width: 23%;
+	}
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	.fancybox-gallery-item {
+		width: 31.33%;
+	}
 }

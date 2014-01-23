@@ -1,11 +1,11 @@
 <?php /* @var $data Portfolio */ ?>
 <li>
 	<div class="row-fluid">
-		<div class="span9">
+		<div class="span8">
 			<p class="title"><a href="<?= $data->url ?>"><?= $data->name ?></a><span class="label label-success"><?= $data->getStatus() ?></span></p>
 		</div>
 
-		<div class="span3">
+		<div class="span4">
 			<div class="visible-phone">
 				<p class="date muted text-left"><?= $data->date ?></p>
 			</div>
