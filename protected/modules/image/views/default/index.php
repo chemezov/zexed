@@ -51,15 +51,14 @@ $this->widget(
         'dataProvider' => $model->search(),
         'filter'       => $model,
         'columns'      => array(
-            'id',
+			array(
+				'name' => 'id',
+				'htmlOptions' => array('style' => 'width:20px'),
+			),
             array(
                 'name'  => Yii::t('ImageModule.image', 'file'),
                 'type'  => 'raw',
                 'value' => 'CHtml::image($data->getUrl(75), $data->alt, array("width" => 75, "height" => 75))',
-            ),
-            array(
-                'name'  => 'category_id',
-                'value' => '$data->getCategoryName()'
             ),
             array(
                 'name'   => 'galleryId',
@@ -76,7 +75,7 @@ $this->widget(
                             )',
             ),
             'name',
-            'alt',
+            'description',
 			array(
 				'name'  => 'sort',
 				'type'  => 'raw',
