@@ -5,7 +5,7 @@ class UserModule extends YWebModule
     public $accountActivationFailure       = '/user/account/registration';
     public $loginSuccess;
     public $registrationSucess             = '/user/account/login';
-    public $loginAdminSuccess              = '';
+    public $loginAdminSuccess              = '/yupe/backend/index';
     public $logoutSuccess;
     public $sessionLifeTime                = 7;
 
