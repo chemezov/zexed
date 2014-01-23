@@ -77,6 +77,11 @@ $this->widget(
             ),
             'name',
             'alt',
+			array(
+				'name'  => 'sort',
+				'type'  => 'raw',
+				'value' => '$this->grid->getUpDownButtons($data)',
+			),
             array(
                 'class'       => 'bootstrap.widgets.TbButtonColumn',
                 'htmlOptions' => array(
