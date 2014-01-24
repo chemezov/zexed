@@ -31,7 +31,12 @@
                     'levels' => 'trace',
                 ),
             ),
-        ),      
+        ),
+		'image'        => array(
+			'class'  => 'application.modules.yupe.extensions.image.CImageComponent',
+			'driver' => 'GD', // если ImageMagick, надо указать к нему путь ниже
+			'params' => array('directory' => '/usr/bin'), // в этой директории должен быть convert
+		),
            // параметры подключения к базе данных, подробнее http://www.yiiframework.ru/doc/guide/ru/database.overview
         'db' => require(dirname(__FILE__) . '/db.php'),
     ),
