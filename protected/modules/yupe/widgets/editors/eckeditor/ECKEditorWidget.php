@@ -70,6 +70,8 @@ class ECKEditorWidget extends CInputWidget
 
 		CKFinder::SetupCKEditor($this->ECKE, Yii::app()->baseUrl . '/web/vendor/ckfinder/');
 
+		$this->setConfig($this->options);
+
 		$this->ECKE->replace($id, $this->_config);
 	}
 }

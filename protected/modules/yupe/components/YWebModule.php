@@ -858,11 +858,14 @@ abstract class YWebModule extends CWebModule
     public function beforeControllerAction($controller, $action)
     {
         $uploadController = Yii::app()->createUrl('/yupe/backend/AjaxFileUpload');
-        $this->editorOptions = array(
-            'imageUpload' => $uploadController,
-            'fileUpload' => $uploadController,
-        );
-        return true;
+		$this->editorOptions = CMap::mergeArray(
+			array(
+				'imageUpload' => $uploadController,
+				'fileUpload'  => $uploadController,
+			),
+			$this->editorOptions
+		);
+		return true;
     }
 
     /**

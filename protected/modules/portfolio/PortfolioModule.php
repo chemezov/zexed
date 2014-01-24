@@ -146,4 +146,16 @@ class PortfolioModule extends YWebModule
 			)
 		);
 	}
+
+	public function beforeControllerAction($controller, $action)
+	{
+		$this->editorOptions = CMap::mergeArray(
+			array(
+				'contentsCss' => Yii::app()->baseUrl . '/themes/default/web/css/result.css',
+			),
+			$this->editorOptions
+		);
+
+		return true;
+	}
 }
