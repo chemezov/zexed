@@ -79,7 +79,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 
 	config.format_tags = 'p;h2;h3;h4;h5;h6;pre;address;div';
-
+	config.allowedContent = true;
 //	config.extraPlugins += (config.extraPlugins ? ',aspell' : 'aspell' );
 	//	config.toolbar_Yii[2] = { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellCheck'] };
 	config.disableNativeSpellChecker = false;
